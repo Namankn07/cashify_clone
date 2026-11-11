@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "649573861704",
+    "project_id": "cashify-naman",
+    "storage_bucket": "cashify-naman.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:649573861704:android:0b808abd6279151849cb7d",
+        "android_client_info": {
+          "package_name": "com.example.cashify_clone"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCQIowKKpK8JlyJwm48G59-t9U809Lxmzk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

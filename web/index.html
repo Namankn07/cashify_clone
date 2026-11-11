@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- Razorpay Web Checkout SDK -->
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  
+  <!-- Web Razorpay Launch Helper (Fixed for Flutter Web Interop) -->
+  <script>
+    window.launchRazorpayWeb = function(options, successCallback, failureCallback) {
+      try {
+        if (typeof Razorpay === 'undefined') {
+          console.error('Razorpay SDK load nahi hua!');
+          if (failureCallback) failureCallback("Razorpay SDK load nahi hua. Connection check karein.");
+          return;
+        }
+
+        // Convert Dart Proxy JS Object to Pure JavaScript Object
+        var jsOptions = typeof options === 'string' ? JSON.parse(options) : JSON.parse(JSON.stringify(options));
+
+        jsOptions.handler = function (response) {
+          if (successCallback) successCallback(response.razorpay_payment_id);
+        };
+
+        jsOptions.modal = {
+          ondismiss: function() {
+            if (failureCallback) failureCallback("Payment modal closed by user");
+          }
+        };
+
+        var rzp1 = new Razorpay(jsOptions);
+        rzp1.on('payment.failed', function (response) {
+          var err = (response && response.error) ? response.error.description : "Payment Failed";
+          if (failureCallback) failureCallback(err);
+        });
+
+        rzp1.open();
+      } catch (err) {
+        console.error("Razorpay Error:", err);
+        if (failureCallback) failureCallback(err.toString());
+      }
+    };
+  </script>
+
+  <base href="$FLUTTER_BASE_HREF">
+
+  <meta charset="UTF-8">
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="description" content="A new Flutter project.">
+
+  <!-- iOS meta tags & icons -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="cashify_clone">
+  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png"/>
+
+  <title>cashify_clone</title>
+  <link rel="manifest" href="manifest.json">
+</head>
+<body>
+  <script src="flutter_bootstrap.js" async></script>
+</body>
+</html>
